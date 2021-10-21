@@ -1,12 +1,14 @@
 from turtle import Turtle, Screen
 from src.draw_sazae import  draw_sazae
 screen = Screen()
-screen.setup(1000,1000)
-screen.tracer(50,0)
+screen.setup(700,700)
+screen.tracer(100,0)
 gamera = Turtle()
-gamera.reset()
+gamera.hideturtle()
 gamera.speed(0)
 gamera.left(90)
-max_depth = 3
-draw_sazae(gamera, 0, max_depth)
+gamera.penup()
+gamera.goto(0,-200)
+max_depth = 2
+draw_sazae(gamera, 0, max_depth,0)
 screen.exitonclick()

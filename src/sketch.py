@@ -96,19 +96,16 @@ positions = [list(iwh) for iwh in zip(iW, iH)]  # Another way will be : list(zip
 with open(path, mode='w') as f:
     f.write('')
 
-with open(path, mode='a') as f:
-    f.write('t.penup()\n')
-    f.write('t.goto(' + str(positions[0]) + ')\n')
-    f.write('t.pendown()\n')
 
 """Iterative approach, more robust, and doesn't crash, unlike the recursive approach"""
-p = positions[0]
+p = [0,-300]
 while (p):
     p = find_closest(p)
     if p:
         current_pos = np.asarray(t.pos())
         new_pos = np.asarray(p)
         length = np.linalg.norm(new_pos - current_pos)
+        print(length)
         if (new_pos[1] - current_pos[1]) != 0 and (new_pos[0] - current_pos[0]) != 0:
             if (new_pos[0] - current_pos[0]) >= 0:
                 if (new_pos[1] - current_pos[1]) >= 0:
@@ -137,9 +134,11 @@ while (p):
         if length < CUTOFF_LEN:
             with open(path, mode='a') as f:
                 #f.write('t.goto(' + str(p) + ')\n')
-                f.write('t.left('+str(angle)+')\n')
-                f.write('t.forward('+str(length)+'/(3**depth)'+')\n')
-                f.write('t.right('+str(angle)+')\n')
+                if angle!=0:
+                    f.write('t.left('+str(angle)+')\n')
+                f.write('t.forward('+str(length)+'/n'+')\n')
+                if angle != 0:
+                    f.write('t.right('+str(angle)+')\n')
             # t.goto(p)  # Go to the closest neighbour, keeping the pen down
             t.left(angle)
             t.forward(length)
@@ -148,9 +147,11 @@ while (p):
             with open(path, mode='a') as f:
                 f.write('t.penup()\n')
                 #f.write('t.goto(' + str(p) + ')\n')
-                f.write('t.left('+str(angle)+')\n')
-                f.write('t.forward('+str(length)+'/(3**depth)'+')\n')
-                f.write('t.right('+str(angle)+')\n')
+                if angle != 0:
+                    f.write('t.left('+str(angle)+')\n')
+                f.write('t.forward('+str(length)+'/n'+')\n')
+                if angle != 0:
+                    f.write('t.right('+str(angle)+')\n')
                 f.write('t.pendown()\n')
             t.penup()
             # t.goto(p)  # Go to the closest neighbour, keeping the pen up
